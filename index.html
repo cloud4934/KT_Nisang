@@ -16,16 +16,21 @@
     }
     .hero h1{margin:0 0 8px}
     .hero p{margin:0 0 14px;color:var(--muted)}
-    .hero .brand-logo{
-      width:140px;height:auto;border-radius:12px;border:1px solid var(--line);
-      display:block;margin-top:10px;background:#0b1020;
+
+    /* baris dua logo */
+    .brand-logos{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+    .brand-logos img{
+      width:140px; height:auto; border-radius:12px; border:1px solid var(--line);
+      background:#0b1020; display:block;
     }
+
     .hero img.right{
       width:50%;height:120px;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block;margin:0 auto;
     }
     @media (max-width:820px){
       .hero{grid-template-columns:1fr}
       .hero img.right{width:60%;height:120px}
+      .brand-logos img{width:120px}
     }
 
     h2{margin:28px 0 12px}
@@ -164,8 +169,16 @@
       <div>
         <h1>Katalog KT Nisang</h1>
         <p>Pilihan bekas pelbagai saiz. Sesuai untuk simpanan, hantaran & kegunaan harian.</p>
-        <img class="brand-logo" src="https://i.ibb.co/3YytfpzF/Chat-GPT-Image-Aug-19-2025-05-21-35-PM.png" alt="Logo KT Nisang">
+
+        <!-- DUA LOGO BERSEBELAHAN -->
+        <div class="brand-logos">
+          <!-- Logo lama (kekalkan) -->
+          <img src="https://i.ibb.co/3YytfpzF/Chat-GPT-Image-Aug-19-2025-05-21-35-PM.png" alt="Logo KT Nisang A">
+          <!-- Logo baharu di sebelahnya (link yang kau bagi) -->
+          <img src="https://i.ibb.co/FkwCQ92S/Screenshot-2025-08-19-173832.png" alt="Logo KT Nisang B">
+        </div>
       </div>
+
       <img class="right" src="https://i.imgur.com/QJ5t2QZ_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="Produk KT Nisang" />
     </section>
 
@@ -344,74 +357,59 @@
     const nextNote = document.getElementById('nextNote');
     const hoursFabLabel = document.getElementById('hoursFabLabel');
 
-    // Jadual (0=Ahad ... 6=Sabtu). Nilai dalam minit dari 00:00.
     const SCHEDULE = {
-      0: null,                                      // Sunday: Closed
-      1: [9*60, 21*60],                              // Mon 9:00-21:00
-      2: [9*60, 21*60],                              // Tue
-      3: [9*60, 21*60],                              // Wed
-      4: [9*60, 21*60],                              // Thu
-      5: [9*60, 21*60],                              // Fri
-      6: [9*60+30, 17*60]                            // Sat 9:30-17:00
+      0: null,
+      1: [9*60, 21*60],
+      2: [9*60, 21*60],
+      3: [9*60, 21*60],
+      4: [9*60, 21*60],
+      5: [9*60, 21*60],
+      6: [9*60+30, 17*60]
     };
 
-    function minutesNow(){
-      const d = new Date();
-      return d.getHours()*60 + d.getMinutes();
-    }
-
+    function minutesNow(){ const d=new Date(); return d.getHours()*60 + d.getMinutes(); }
     function formatTime(mins){
-      // 24h -> '9:00 pagi' '5:00 petang'
-      let h = Math.floor(mins/60), m = mins%60;
-      const isAM = h < 12;
-      const label = isAM ? 'pagi' : (h < 18 ? 'petang' : 'malam');
-      if(h === 0) h = 12; else if(h > 12) h -= 12;
+      let h=Math.floor(mins/60), m=mins%60;
+      const isAM=h<12, label=isAM?'pagi':(h<18?'petang':'malam');
+      if(h===0) h=12; else if(h>12) h-=12;
       return `${h}:${m.toString().padStart(2,'0')} ${label}`;
     }
 
     function computeStatus(){
-      const now = new Date();
-      const day = now.getDay(); // 0..6
-      const t = minutesNow();
-      const today = SCHEDULE[day];
+      const now=new Date();
+      const day=now.getDay();
+      const t=minutesNow();
+      const today=SCHEDULE[day];
 
-      // Highlight baris hari ini
       document.querySelectorAll('.hours-table tr').forEach(tr=>{
-        tr.classList.toggle('row-today', Number(tr.dataset.day) === day);
+        tr.classList.toggle('row-today', Number(tr.dataset.day)===day);
       });
 
-      // Cari seterusnya buka bila
       function nextOpenMessage(){
         for(let i=0;i<7;i++){
-          const d = (day + i) % 7;
-          const slot = SCHEDULE[d];
+          const d=(day+i)%7, slot=SCHEDULE[d];
           if(slot){
             const when = i===0 && t <= slot[0] ? 'hari ini' :
                          i===1 ? 'esok' :
                          ['Ahad','Isnin','Selasa','Rabu','Khamis','Jumaat','Sabtu'][d];
-            const time = formatTime(slot[0]);
-            return `Buka ${when} pada ${time}.`;
+            return `Buka ${when} pada ${formatTime(slot[0])}.`;
           }
         }
         return '';
       }
 
-      if(today && t >= today[0] && t < today[1]){
-        // OPEN
-        openStatusChip.textContent = 'Buka sekarang';
-        openStatusChip.className = 'status-chip status-open';
-        openHoursBtn.classList.add('open');
-        openHoursBtn.classList.remove('closed');
-        hoursFabLabel.textContent = 'Buka sekarang';
-        nextNote.textContent = `Tutup pada ${formatTime(today[1])}.`;
+      if(today && t>=today[0] && t<today[1]){
+        openStatusChip.textContent='Buka sekarang';
+        openStatusChip.className='status-chip status-open';
+        openHoursBtn.classList.add('open'); openHoursBtn.classList.remove('closed');
+        hoursFabLabel.textContent='Buka sekarang';
+        nextNote.textContent=`Tutup pada ${formatTime(today[1])}.`;
       }else{
-        // CLOSED
-        openStatusChip.textContent = 'Tutup sekarang';
-        openStatusChip.className = 'status-chip status-closed';
-        openHoursBtn.classList.add('closed');
-        openHoursBtn.classList.remove('open');
-        hoursFabLabel.textContent = 'Tutup sekarang';
-        nextNote.textContent = nextOpenMessage();
+        openStatusChip.textContent='Tutup sekarang';
+        openStatusChip.className='status-chip status-closed';
+        openHoursBtn.classList.add('closed'); openHoursBtn.classList.remove('open');
+        hoursFabLabel.textContent='Tutup sekarang';
+        nextNote.textContent=nextOpenMessage();
       }
     }
 
@@ -423,7 +421,6 @@
     hoursBackdrop.addEventListener('click', e=>{ if(e.target===hoursBackdrop) hideHours(); });
     document.addEventListener('keydown', e=>{ if(e.key==='Escape' && hoursBackdrop.style.display==='flex') hideHours(); });
 
-    // Kemas kini status pada load & setiap minit (untuk label FAB)
     computeStatus();
     setInterval(computeStatus, 60*1000);
   </script>
