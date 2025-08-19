@@ -9,6 +9,8 @@
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--fg)}
     .wrap{max-width:1100px;margin:36px auto;padding:0 16px}
+
+    /* HERO */
     .hero{
       display:grid;grid-template-columns:1.1fr .9fr;gap:20px;
       padding:20px;border:1px solid var(--line);border-radius:14px;
@@ -16,10 +18,6 @@
     }
     .hero h1{margin:0 0 8px}
     .hero p{margin:0 0 14px;color:var(--muted)}
-    .hero .brand-logo{
-      width:140px;height:auto;border-radius:12px;border:1px solid var(--line);
-      display:block;margin-top:10px;background:#0b1020;
-    }
     .hero img.right{
       width:50%;height:120px;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block;margin:0 auto;
     }
@@ -28,6 +26,7 @@
       .hero img.right{width:60%;height:120px}
     }
 
+    /* GRID PRODUK */
     h2{margin:28px 0 12px}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
     .card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
@@ -36,11 +35,7 @@
       transition:transform .25s ease, box-shadow .25s ease;
       cursor:pointer;
     }
-    .card img:hover{
-      transform:scale(1.08);
-      box-shadow:0 10px 24px rgba(0,0,0,.45);
-      z-index:2;position:relative;
-    }
+    .card img:hover{ transform:scale(1.08); box-shadow:0 10px 24px rgba(0,0,0,.45); z-index:2; position:relative; }
     .p{padding:12px}
     .title{margin:0 0 6px;font-weight:800}
     .desc{margin:0 0 10px;color:var(--muted);min-height:34px}
@@ -49,7 +44,7 @@
     .tag{font-size:12px;background:#1e293b;color:#c7d2fe;padding:4px 8px;border-radius:999px}
     footer{margin:28px 0 10px;color:#93a4b8;text-align:center}
 
-    /* FABs */
+    /* FLOATING BUTTONS */
     .fab-wa{
       position:fixed; right:18px; bottom:18px; z-index:50;
       display:inline-flex; align-items:center; gap:6px;
@@ -60,10 +55,7 @@
     }
     .fab-wa img{width:24px;height:24px}
     .fab-wa:hover{transform:translateY(-1px)}
-    @media (max-width:420px){
-      .fab-wa{padding:12px; gap:0}
-      .fab-wa span{display:none}
-    }
+    @media (max-width:420px){ .fab-wa{padding:12px; gap:0} .fab-wa span{display:none} }
 
     .fab-info{
       position:fixed; right:18px; bottom:78px; z-index:50;
@@ -85,12 +77,8 @@
     }
     .fab-map:hover{transform:translateY(-1px)}
     .fab-map .pin{width:24px;height:24px;display:grid;place-items:center;background:#fff;border-radius:999px;color:#ea4335;font-weight:900}
-    @media (max-width:420px){
-      .fab-map{padding:12px}
-      .fab-map span.label{display:none}
-    }
+    @media (max-width:420px){ .fab-map{padding:12px} .fab-map span.label{display:none} }
 
-    /* FAB Hours (status color will update via JS) */
     .fab-hours{
       position:fixed; right:18px; bottom:198px; z-index:50;
       display:inline-flex; align-items:center; gap:6px;
@@ -103,13 +91,9 @@
     .fab-hours.closed{ background:#64748b; color:#0b1020;}
     .fab-hours:hover{transform:translateY(-1px)}
     .fab-hours .clock{width:24px;height:24px;display:grid;place-items:center;background:#fff;border-radius:999px}
+    @media (max-width:420px){ .fab-hours{padding:12px} .fab-hours span.label{display:none} }
 
-    @media (max-width:420px){
-      .fab-hours{padding:12px}
-      .fab-hours span.label{display:none}
-    }
-
-    /* Sheet artikel */
+    /* SHEET ARTIKEL */
     .sheet-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.5); display:none; align-items:flex-end; justify-content:center; z-index:60;}
     .sheet{
       width:min(860px,94vw); max-height:86vh; overflow:auto;
@@ -132,12 +116,12 @@
     .sheet .badge{font-size:12px;background:#1e293b;color:#c7d2fe;padding:4px 8px;border-radius:999px}
     @media (min-width:820px){ .sheet{border-radius:16px} .sheet-backdrop{align-items:center} }
 
-    /* Popup gambar (produk) */
+    /* POPUP GAMBAR PRODUK */
     .img-popup{ position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; align-items:center; justify-content:center; z-index:100; }
     .img-popup img{ max-width:90%; max-height:85vh; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.6); }
     .img-popup .close-img{ position:absolute; top:20px; right:20px; background:#0e1731; color:#fff; border:none; font-size:22px; cursor:pointer; width:38px; height:38px; border-radius:50%; }
 
-    /* Panel Waktu Operasi */
+    /* PANEL WAKTU OPERASI */
     .hours-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:70;}
     .hours-card{
       width:min(420px,92vw); background:#0b1328; color:var(--fg);
@@ -155,6 +139,15 @@
     .status-open{background:#16a34a;color:#eafff0}
     .status-closed{background:#ef4444;color:#fff}
     .next-note{color:#9fb0c9; font-size:13px; margin-top:6px}
+
+    /* LOGO TEPI (sidebar) */
+    .side-brand{
+      position:fixed; left:12px; top:50%; transform:translateY(-50%);
+      z-index:40; background:#0b1328; border:1px solid var(--line);
+      border-radius:14px; padding:8px; box-shadow:0 8px 20px rgba(0,0,0,.35);
+    }
+    .side-brand img{ width:84px; height:84px; object-fit:contain; border-radius:12px; display:block; }
+    @media (max-width:900px){ .side-brand{display:none;} } /* sorok pada skrin kecil */
   </style>
 </head>
 <body>
@@ -164,7 +157,6 @@
       <div>
         <h1>Katalog KT Nisang</h1>
         <p>Pilihan bekas pelbagai saiz. Sesuai untuk simpanan, hantaran & kegunaan harian.</p>
-        <img class="brand-logo" src="https://i.ibb.co/3YytfpzF/Chat-GPT-Image-Aug-19-2025-05-21-35-PM.png" alt="Logo KT Nisang">
       </div>
       <img class="right" src="https://i.imgur.com/QJ5t2QZ_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="Produk KT Nisang" />
     </section>
@@ -212,6 +204,11 @@
     <footer>© <span id="year"></span> KT Nisang</footer>
   </div>
 
+  <!-- LOGO TEPI -->
+  <div class="side-brand" aria-hidden="true">
+    <img src="https://i.ibb.co/FkwCQ92S/Screenshot-2025-08-19-173832.png" alt="Logo KT Nisang">
+  </div>
+
   <!-- FAB WhatsApp -->
   <a class="fab-wa" href="https://wa.link/px4hi1" target="_blank" aria-label="WhatsApp KT Nisang">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="">
@@ -242,34 +239,27 @@
         <h3 id="sheetTitle">Tentang Gula Nisang</h3>
         <button class="close-x" id="closeSheet" aria-label="Tutup">✕</button>
       </header>
-
       <p class="muted">Ringkasan warisan & info produk.</p>
-
       <h4>Asal Usul & Proses</h4>
       <p>Gula nisang ialah gula nisan asli yang dihasilkan daripada <strong>air nira mayang kelapa</strong>. Air nira dikumpul secara tradisional dan dimasak perlahan hingga pekat dan keperangan. Apabila cukup likat, ia dituang ke dalam <strong>acuan daripada jalur mengkuang yang dipotong dan disambung hujung ke hujung sehingga membentuk bulatan</strong> — menghasilkan bentuk bulat klasik.</p>
-
       <h4>Penyimpanan & Pengawet Semula Jadi</h4>
       <ul>
         <li><strong>Simpan beku:</strong> Air nira boleh terus disimpan dalam <em>freezer</em> untuk tahan lebih lama sebelum diproses.</li>
         <li><strong>Pengawet tradisional:</strong> Kayu <em>cengal</em> berfungsi sebagai pengawet semula jadi yang membantu ketahanan produk.</li>
       </ul>
-
       <h4>Fermentasi → Cuka</h4>
       <p>Jika dibiarkan lama pada suhu bilik, gula nisang akan mula berbuih dan <em>berfermentasi</em>, lalu berubah menjadi cuka semula jadi. Anggaran masa: <strong>± 2–4 minggu</strong> bergantung pada suhu & kelembapan.</p>
-
       <h4>Ciri Rasa</h4>
       <ul>
         <li>Manis karamel pekat, sedikit aroma “smoky”.</li>
         <li>Tekstur keras, mudah larut bila dipanaskan.</li>
         <li>Bentuk bulat (acuan mengkuang sambung hujung ke hujung).</li>
       </ul>
-
       <h4>Kegunaan</h4>
       <ul>
         <li>Kuih tradisional: onde-onde, sago gula nisang, bubur pulut.</li>
         <li>Minuman sejuk/cendol; juga untuk seimbangkan masakan berkuah.</li>
       </ul>
-
       <table>
         <tr><th class="badge">Ringkasan</th><th>Butiran</th></tr>
         <tr><td>Apa</td><td>Gula nisang daripada air nira mayang kelapa, dituangkan ke acuan mengkuang bulat.</td></tr>
@@ -346,72 +336,58 @@
 
     // Jadual (0=Ahad ... 6=Sabtu). Nilai dalam minit dari 00:00.
     const SCHEDULE = {
-      0: null,                                      // Sunday: Closed
-      1: [9*60, 21*60],                              // Mon 9:00-21:00
-      2: [9*60, 21*60],                              // Tue
-      3: [9*60, 21*60],                              // Wed
-      4: [9*60, 21*60],                              // Thu
-      5: [9*60, 21*60],                              // Fri
-      6: [9*60+30, 17*60]                            // Sat 9:30-17:00
+      0: null,
+      1: [9*60, 21*60],
+      2: [9*60, 21*60],
+      3: [9*60, 21*60],
+      4: [9*60, 21*60],
+      5: [9*60, 21*60],
+      6: [9*60+30, 17*60]
     };
 
-    function minutesNow(){
-      const d = new Date();
-      return d.getHours()*60 + d.getMinutes();
-    }
-
+    function minutesNow(){ const d=new Date(); return d.getHours()*60 + d.getMinutes(); }
     function formatTime(mins){
-      // 24h -> '9:00 pagi' '5:00 petang'
-      let h = Math.floor(mins/60), m = mins%60;
-      const isAM = h < 12;
-      const label = isAM ? 'pagi' : (h < 18 ? 'petang' : 'malam');
-      if(h === 0) h = 12; else if(h > 12) h -= 12;
+      let h=Math.floor(mins/60), m=mins%60;
+      const isAM=h<12, label=isAM?'pagi':(h<18?'petang':'malam');
+      if(h===0) h=12; else if(h>12) h-=12;
       return `${h}:${m.toString().padStart(2,'0')} ${label}`;
     }
 
     function computeStatus(){
-      const now = new Date();
-      const day = now.getDay(); // 0..6
-      const t = minutesNow();
-      const today = SCHEDULE[day];
+      const now=new Date();
+      const day=now.getDay();
+      const t=minutesNow();
+      const today=SCHEDULE[day];
 
-      // Highlight baris hari ini
       document.querySelectorAll('.hours-table tr').forEach(tr=>{
-        tr.classList.toggle('row-today', Number(tr.dataset.day) === day);
+        tr.classList.toggle('row-today', Number(tr.dataset.day)===day);
       });
 
-      // Cari seterusnya buka bila
       function nextOpenMessage(){
         for(let i=0;i<7;i++){
-          const d = (day + i) % 7;
-          const slot = SCHEDULE[d];
+          const d=(day+i)%7, slot=SCHEDULE[d];
           if(slot){
             const when = i===0 && t <= slot[0] ? 'hari ini' :
                          i===1 ? 'esok' :
                          ['Ahad','Isnin','Selasa','Rabu','Khamis','Jumaat','Sabtu'][d];
-            const time = formatTime(slot[0]);
-            return `Buka ${when} pada ${time}.`;
+            return `Buka ${when} pada ${formatTime(slot[0])}.`;
           }
         }
         return '';
       }
 
-      if(today && t >= today[0] && t < today[1]){
-        // OPEN
-        openStatusChip.textContent = 'Buka sekarang';
-        openStatusChip.className = 'status-chip status-open';
-        openHoursBtn.classList.add('open');
-        openHoursBtn.classList.remove('closed');
-        hoursFabLabel.textContent = 'Buka sekarang';
-        nextNote.textContent = `Tutup pada ${formatTime(today[1])}.`;
+      if(today && t>=today[0] && t<today[1]){
+        openStatusChip.textContent='Buka sekarang';
+        openStatusChip.className='status-chip status-open';
+        openHoursBtn.classList.add('open'); openHoursBtn.classList.remove('closed');
+        hoursFabLabel.textContent='Buka sekarang';
+        nextNote.textContent=`Tutup pada ${formatTime(today[1])}.`;
       }else{
-        // CLOSED
-        openStatusChip.textContent = 'Tutup sekarang';
-        openStatusChip.className = 'status-chip status-closed';
-        openHoursBtn.classList.add('closed');
-        openHoursBtn.classList.remove('open');
-        hoursFabLabel.textContent = 'Tutup sekarang';
-        nextNote.textContent = nextOpenMessage();
+        openStatusChip.textContent='Tutup sekarang';
+        openStatusChip.className='status-chip status-closed';
+        openHoursBtn.classList.add('closed'); openHoursBtn.classList.remove('open');
+        hoursFabLabel.textContent='Tutup sekarang';
+        nextNote.textContent=nextOpenMessage();
       }
     }
 
@@ -423,7 +399,7 @@
     hoursBackdrop.addEventListener('click', e=>{ if(e.target===hoursBackdrop) hideHours(); });
     document.addEventListener('keydown', e=>{ if(e.key==='Escape' && hoursBackdrop.style.display==='flex') hideHours(); });
 
-    // Kemas kini status pada load & setiap minit (untuk label FAB)
+    // Label status FAB ikut masa (auto update tiap minit)
     computeStatus();
     setInterval(computeStatus, 60*1000);
   </script>
