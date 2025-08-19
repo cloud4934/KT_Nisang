@@ -56,12 +56,70 @@
       background:#25D366; color:#001018; text-decoration:none;
       padding:12px 14px; border-radius:999px; font-weight:700;
       box-shadow:0 10px 24px rgba(0,0,0,.25);
+      transition:transform .15s ease;
     }
     .fab-wa img{width:24px;height:24px}
     .fab-wa:hover{transform:translateY(-1px)}
     @media (max-width:420px){
       .fab-wa{padding:12px; gap:0}
       .fab-wa span{display:none}
+    }
+
+    /* Floating INFO button */
+    .fab-info{
+      position:fixed; right:18px; bottom:78px; z-index:50; /* atas sikit dari WA */
+      display:inline-flex; align-items:center; gap:6px;
+      background:#38bdf8; color:#001018; text-decoration:none;
+      padding:12px 14px; border-radius:999px; font-weight:700;
+      box-shadow:0 10px 24px rgba(0,0,0,.25);
+      cursor:pointer; user-select:none;
+      transition:transform .15s ease;
+    }
+    .fab-info:hover{transform:translateY(-1px)}
+    .fab-info .dot{width:24px;height:24px;border-radius:999px;background:#e0f2fe;
+      display:grid;place-items:center;font-weight:900}
+
+    /* Artikel floating (sheet/modal) */
+    .sheet-backdrop{
+      position:fixed; inset:0; background:rgba(0,0,0,.5);
+      display:none; align-items:flex-end; justify-content:center;
+      z-index:60;
+    }
+    .sheet{
+      width:min(860px,94vw);
+      max-height:86vh; overflow:auto;
+      background:#0b1328; color:var(--fg);
+      border:1px solid var(--line);
+      border-radius:16px 16px 0 0;
+      padding:18px 18px 24px;
+      box-shadow:0 -12px 36px rgba(0,0,0,.35);
+      transform:translateY(12px);
+      animation:up .18s ease-out both;
+    }
+    @keyframes up{from{transform:translateY(20px); opacity:.8} to{transform:translateY(0); opacity:1}}
+
+    .sheet header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; position:sticky; top:0; background:linear-gradient(180deg,#0b1328 90%,rgba(11,19,40,0));
+      padding-bottom:6px; margin-bottom:8px;
+    }
+    .sheet h3{margin:0; font-size:20px}
+    .close-x{
+      border:1px solid var(--line); background:#0e1731; color:#cbd5e1;
+      width:36px; height:36px; border-radius:10px; display:grid; place-items:center;
+      cursor:pointer;
+    }
+    .sheet .muted{color:#94a3b8; margin:0 0 10px}
+    .sheet h4{margin:18px 0 8px}
+    .sheet p{margin:0 0 10px; color:#dbe5f2; line-height:1.6}
+    .sheet ul{margin:0 0 12px 18px}
+    .sheet li{margin:6px 0}
+    .sheet table{width:100%; border-collapse:collapse; margin-top:8px}
+    .sheet th,.sheet td{border:1px solid var(--line); padding:8px; text-align:left}
+    .sheet .badge{font-size:12px;background:#1e293b;color:#c7d2fe;padding:4px 8px;border-radius:999px}
+    @media (min-width:820px){
+      .sheet{border-radius:16px}
+      .sheet-backdrop{align-items:center}
     }
   </style>
 </head>
@@ -157,8 +215,83 @@
     <span>WhatsApp</span>
   </a>
 
+  <!-- Floating INFO Button -->
+  <button class="fab-info" id="openInfo" aria-haspopup="dialog" aria-controls="sheetArtikel" aria-expanded="false">
+    <span class="dot">i</span>
+    <span>Info Guna Nisang</span>
+  </button>
+
+  <!-- SHEET / MODAL ARTIKEL -->
+  <div class="sheet-backdrop" id="sheetBackdrop" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" style="display:none">
+    <div class="sheet" id="sheetArtikel">
+      <header>
+        <h3 id="sheetTitle">Tentang Guna Nisang</h3>
+        <button class="close-x" id="closeSheet" aria-label="Tutup">✕</button>
+      </header>
+
+      <p class="muted">Ringkasan warisan & info produk.</p>
+
+      <h4>Asal Usul & Proses</h4>
+      <p>Guna nisang ialah gula nisan asli yang dihasilkan daripada <strong>air nira mayang kelapa</strong>. Air nira dikumpul secara tradisional dan dimasak perlahan hingga pekat dan keperangan. Apabila cukup likat, ia dituang ke dalam <strong>acuan daripada jalur mengkuang yang dipotong dan disambung hujung ke hujung sehingga membentuk bulatan</strong> — menghasilkan bentuk bulat klasik.</p>
+
+      <h4>Penyimpanan & Pengawet Semula Jadi</h4>
+      <ul>
+        <li><strong>Simpan beku:</strong> Air nira boleh terus disimpan dalam <em>freezer</em> untuk tahan lebih lama sebelum diproses.</li>
+        <li><strong>Pengawet tradisional:</strong> Kayu <em>cengal</em> berfungsi sebagai pengawet semula jadi yang membantu ketahanan produk.</li>
+      </ul>
+
+      <h4>Fermentasi → Cuka</h4>
+      <p>Jika dibiarkan lama pada suhu bilik, guna nisang akan mula berbuih dan <em>berfermentasi</em>, lalu berubah menjadi cuka semula jadi. Anggaran masa: <strong>± 2–4 minggu</strong> bergantung pada suhu & kelembapan.</p>
+
+      <h4>Ciri Rasa</h4>
+      <ul>
+        <li>Manis karamel pekat, sedikit aroma “smoky”.</li>
+        <li>Tekstur keras, mudah larut bila dipanaskan.</li>
+        <li>Bentuk bulat (acuan mengkuang sambung hujung ke hujung).</li>
+      </ul>
+
+      <h4>Kegunaan</h4>
+      <ul>
+        <li>Kuih tradisional: onde-onde, sago guna nisang, bubur pulut.</li>
+        <li>Minuman sejuk/cendol; juga untuk seimbangkan masakan berkuah.</li>
+      </ul>
+
+      <table>
+        <tr><th class="badge">Ringkas</th><th>Butiran</th></tr>
+        <tr><td>Apa</td><td>Guna nisang daripada air nira mayang kelapa, dituangkan ke acuan mengkuang bulat.</td></tr>
+        <tr><td>Penyimpanan</td><td>Air nira boleh dibekukan; air nira tahan lama dengan bantuan kayu cengal senbagai pengawet.</td></tr>
+        <tr><td>Fermentasi</td><td>Jadi cuka semula jadi dalam kira-kira 2–4 minggu jika dibiarkan pada suhu bilik.</td></tr>
+      </table>
+    </div>
+  </div>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const openBtn = document.getElementById('openInfo');
+    const backdrop = document.getElementById('sheetBackdrop');
+    const closeBtn = document.getElementById('closeSheet');
+
+    function openSheet(){
+      backdrop.style.display = 'flex';
+      openBtn.setAttribute('aria-expanded','true');
+      // lock scroll on body
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSheet(){
+      backdrop.style.display = 'none';
+      openBtn.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+
+    openBtn.addEventListener('click', openSheet);
+    closeBtn.addEventListener('click', closeSheet);
+    backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) closeSheet(); });
+
+    // Escape key to close
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && backdrop.style.display === 'flex'){ closeSheet(); }
+    });
   </script>
 </body>
 </html>
