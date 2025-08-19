@@ -44,6 +44,7 @@
     .card img{
       width:100%;height:170px;object-fit:cover;
       transition:transform .25s ease, box-shadow .25s ease;
+      cursor:pointer;
     }
     .card img:hover{
       transform:scale(1.08);
@@ -129,6 +130,25 @@
       .sheet{border-radius:16px}
       .sheet-backdrop{align-items:center}
     }
+
+    /* popup gambar */
+    .img-popup{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.75);
+      display:none; align-items:center; justify-content:center;
+      z-index:100;
+    }
+    .img-popup img{
+      max-width:90%; max-height:85vh;
+      border-radius:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,.6);
+    }
+    .img-popup .close-img{
+      position:absolute; top:20px; right:20px;
+      background:#0e1731; color:#fff;
+      border:none; font-size:22px; cursor:pointer;
+      width:38px; height:38px; border-radius:50%;
+    }
   </style>
 </head>
 <body>
@@ -149,62 +169,22 @@
     <div class="grid">
       <article class="card">
         <img src="https://i.imgur.com/bG7A1gg.png" alt="Pack (Ikat)">
-        <div class="p">
-          <div class="row" style="margin-bottom:6px">
-            <h3 class="title">Pack (Ikat)</h3>
-            <span class="tag">Pack</span>
-          </div>
-          <p class="desc">Contoh pembungkusan berikat. (Tiada harga)</p>
-          <div class="row">
-            <div class="price">RM —</div>
-            <span></span>
-          </div>
-        </div>
+        <div class="p"><h3 class="title">Pack (Ikat)</h3></div>
       </article>
 
       <article class="card">
         <img src="https://i.ibb.co/j9CgLwvJ/Screenshot-2025-08-19-124545-Copy.png" alt="Original (Bekas)">
-        <div class="p">
-          <div class="row" style="margin-bottom:6px">
-            <h3 class="title">Original (Bekas)</h3>
-            <span class="tag">Bekas</span>
-          </div>
-          <p class="desc">Pilihan dalam bekas plastik kedap.</p>
-          <div class="row">
-            <div class="price">RM —</div>
-            <span></span>
-          </div>
-        </div>
+        <div class="p"><h3 class="title">Original (Bekas)</h3></div>
       </article>
 
       <article class="card">
         <img src="https://i.ibb.co/FLsywJ0d/Screenshot-2025-08-19-124537-Copy-2.png" alt="Kecil 6.5cm">
-        <div class="p">
-          <div class="row" style="margin-bottom:6px">
-            <h3 class="title">Kecil</h3>
-            <span class="tag">6.5cm ±</span>
-          </div>
-          <p class="desc">Saiz kecil untuk kegunaan harian.</p>
-          <div class="row">
-            <div class="price">RM —</div>
-            <span></span>
-          </div>
-        </div>
+        <div class="p"><h3 class="title">Kecil</h3></div>
       </article>
 
       <article class="card">
         <img src="https://i.ibb.co/Hp1wfxXX/Screenshot-2025-08-19-124537-Copy-Copy.png" alt="Besar 9.5cm">
-        <div class="p">
-          <div class="row" style="margin-bottom:6px">
-            <h3 class="title">Besar</h3>
-            <span class="tag">9.5cm ±</span>
-          </div>
-          <p class="desc">Saiz besar untuk kuantiti lebih.</p>
-          <div class="row">
-            <div class="price">RM —</div>
-            <span></span>
-          </div>
-        </div>
+        <div class="p"><h3 class="title">Besar</h3></div>
       </article>
     </div>
 
@@ -216,78 +196,32 @@
     <span>WhatsApp</span>
   </a>
 
-  <button class="fab-info" id="openInfo" aria-haspopup="dialog" aria-controls="sheetArtikel" aria-expanded="false">
-    <span class="dot">i</span>
-    <span>Info Gula Nisang</span>
-  </button>
+  <button class="fab-info" id="openInfo"> <span class="dot">i</span> <span>Info Gula Nisang</span> </button>
 
-  <div class="sheet-backdrop" id="sheetBackdrop" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" style="display:none">
-    <div class="sheet" id="sheetArtikel">
-      <header>
-        <h3 id="sheetTitle">Tentang Gula Nisang</h3>
-        <button class="close-x" id="closeSheet" aria-label="Tutup">✕</button>
-      </header>
-
-      <p class="muted">Ringkasan warisan & info produk.</p>
-
-      <h4>Asal Usul & Proses</h4>
-      <p>Gula nisang ialah gula nisan asli yang dihasilkan daripada <strong>air nira mayang kelapa</strong>. Air nira dikumpul secara tradisional dan dimasak perlahan hingga pekat dan keperangan. Apabila cukup likat, ia dituang ke dalam <strong>acuan daripada jalur mengkuang yang dipotong dan disambung hujung ke hujung sehingga membentuk bulatan</strong> — menghasilkan bentuk bulat klasik.</p>
-
-      <h4>Penyimpanan & Pengawet Semula Jadi</h4>
-      <ul>
-        <li><strong>Simpan beku:</strong> Air nira boleh terus disimpan dalam <em>freezer</em> untuk tahan lebih lama sebelum diproses.</li>
-        <li><strong>Pengawet tradisional:</strong> Kayu <em>cengal</em> berfungsi sebagai pengawet semula jadi yang membantu ketahanan produk.</li>
-      </ul>
-
-      <h4>Fermentasi → Cuka</h4>
-      <p>Jika dibiarkan lama pada suhu bilik, gula nisang akan mula berbuih dan <em>berfermentasi</em>, lalu berubah menjadi cuka semula jadi. Anggaran masa: <strong>± 2–4 minggu</strong> bergantung pada suhu & kelembapan.</p>
-
-      <h4>Ciri Rasa</h4>
-      <ul>
-        <li>Manis karamel pekat, sedikit aroma “smoky”.</li>
-        <li>Tekstur keras, mudah larut bila dipanaskan.</li>
-        <li>Bentuk bulat (acuan mengkuang sambung hujung ke hujung).</li>
-      </ul>
-
-      <h4>Kegunaan</h4>
-      <ul>
-        <li>Kuih tradisional: onde-onde, sago gula nisang, bubur pulut.</li>
-        <li>Minuman sejuk/cendol; juga untuk seimbangkan masakan berkuah.</li>
-      </ul>
-
-      <table>
-        <tr><th class="badge">Ringkasan</th><th>Butiran</th></tr>
-        <tr><td>Apa</td><td>Gula nisang daripada air nira mayang kelapa, dituangkan ke acuan mengkuang bulat.</td></tr>
-        <tr><td>Penyimpanan</td><td>Air nira boleh dibekukan; produk siap tahan lama dengan bantuan kayu cengal.</td></tr>
-        <tr><td>Fermentasi</td><td>Jadi cuka semula jadi dalam kira-kira 2–4 minggu jika dibiarkan pada suhu bilik.</td></tr>
-      </table>
-    </div>
+  <!-- Popup Gambar -->
+  <div class="img-popup" id="imgPopup">
+    <button class="close-img" id="closeImg">✕</button>
+    <img src="" alt="Popup Produk" id="popupImg">
   </div>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const openBtn = document.getElementById('openInfo');
-    const backdrop = document.getElementById('sheetBackdrop');
-    const closeBtn = document.getElementById('closeSheet');
+    // popup gambar
+    const imgs = document.querySelectorAll('.card img');
+    const popup = document.getElementById('imgPopup');
+    const popupImg = document.getElementById('popupImg');
+    const closeImg = document.getElementById('closeImg');
 
-    function openSheet(){
-      backdrop.style.display = 'flex';
-      openBtn.setAttribute('aria-expanded','true');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeSheet(){
-      backdrop.style.display = 'none';
-      openBtn.setAttribute('aria-expanded','false');
-      document.body.style.overflow = '';
-    }
-
-    openBtn.addEventListener('click', openSheet);
-    closeBtn.addEventListener('click', closeSheet);
-    backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) closeSheet(); });
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape' && backdrop.style.display === 'flex'){ closeSheet(); }
+    imgs.forEach(img=>{
+      img.addEventListener('click', ()=>{
+        popup.style.display = 'flex';
+        popupImg.src = img.src;
+      });
     });
+    closeImg.addEventListener('click', ()=> popup.style.display='none');
+    popup.addEventListener('click', e=>{ if(e.target===popup) popup.style.display='none'; });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') popup.style.display='none'; });
   </script>
 </body>
 </html>
