@@ -1,213 +1,32 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KT Nisang – Katalog</title>
-<meta name="description" content="Katalog produk KT Nisang. Tempahan borong & runcit.">
-<style>
-  :root{--bg:#0b1020;--fg:#e5e7eb;--muted:#9ca3af;--card:#111828;--brand:#38bdf8}
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--fg)}
-  header{position:sticky;top:0;z-index:20;background:#0b1020cc;backdrop-filter:blur(8px);border-bottom:1px solid #0f172a}
-  .nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:14px;padding:12px 16px}
-  .brand{font-weight:700;letter-spacing:.3px}
-  .nav a{color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:10px}
-  .nav a:hover{background:#0f172a;color:#cbd5e1}
-
-  .hero{max-width:1100px;margin:18px auto 6px;padding:10px 16px}
-  .hero .box{background:linear-gradient(180deg,#0f172a,#0b1020);border:1px solid #17203a;border-radius:18px;padding:22px;display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
-  .hero h1{margin:0 0 6px 0;font-size:clamp(22px,3vw,32px)}
-  .hero p{margin:0;color:var(--muted)}
-  .cta{display:flex;gap:10px;margin-top:12px}
-  .btn{background:var(--brand);color:#001018;border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600}
-  .btn.outline{background:transparent;color:var(--fg);border:1px solid #1f2937}
-  .hero img{width:100%;height:220px;object-fit:cover;border-radius:14px;border:1px solid #17203a}
-  @media(max-width:820px){.hero .box{grid-template-columns:1fr;}}
-
-  main{max-width:1100px;margin:14px auto 40px;padding:0 16px}
-  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 16px}
-  .controls input,.controls select{background:#0b1224;border:1px solid #17203a;color:var(--fg);padding:10px;border-radius:10px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-  .card{background:var(--card);border:1px solid #17203a;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
-  .card img{width:100%;height:170px;object-fit:cover}
-  .card .p{padding:12px}
-  .title{font-weight:700;margin:0 0 6px 0}
-  .desc{color:var(--muted);font-size:14px;margin:0 0 8px 0;min-height:36px}
-  .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-  .price{font-weight:800}
-  .tag{font-size:12px;color:#a5b4fc;background:#1e1b4b;padding:4px 8px;border-radius:999px}
-
-  footer{border-top:1px solid #0f172a;color:#9aa4b2}
-  .foot{max-width:1100px;margin:auto;padding:18px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>KT Nisang</title>
+  <style>
+    body {margin:0; font-family:sans-serif; background:#0b1020; color:#e5e7eb;}
+    .hero {
+      display:grid; grid-template-columns:1fr 1fr; gap:20px;
+      max-width:900px; margin:50px auto; padding:20px;
+      border:1px solid #17203a; border-radius:12px;
+      background:linear-gradient(180deg,#0f172a,#0b1020);
+    }
+    .hero h1 {margin:0 0 10px 0;}
+    .hero p {margin:0 0 15px 0; color:#9ca3af;}
+    .btn {background:#38bdf8; color:#000; padding:10px 16px; border-radius:8px; text-decoration:none; font-weight:bold;}
+    .hero img {width:100%; border-radius:10px;}
+  </style>
 </head>
 <body>
-<header>
-  <nav class="nav">
-    <div class="brand">KT Nisang</div>
-    <a href="#produk">Produk</a>
-    <a href="#hubungi">Hubungi</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <div class="box">
+  <section class="hero">
     <div>
       <h1>Katalog Bekas & Aksesori</h1>
-      <p>Pilihan bekas pelbagai saiz. Sesuai untuk simpanan, hantaran & kegunaan harian. Borong & runcit tersedia.</p>
-      <div class="cta">
-        <button class="btn" onclick="scrollToProduk()">Lihat Produk</button>
-        <a class="btn outline" id="ctaWA" target="_blank" rel="noopener">WhatsApp</a>
-      </div>
+      <p>Pilihan bekas pelbagai saiz. Sesuai untuk simpanan, hantaran & kegunaan harian.</p>
+      <a href="#produk" class="btn">Lihat Produk</a>
     </div>
-    <img id="heroImg" loading="lazy" alt="Produk KT Nisang">
-  </div>
-</section>
-
-<main id="produk">
-  <div class="controls">
-    <input id="q" type="search" placeholder="Cari produk… (cth: bekas, besar)">
-    <select id="sort">
-      <option value="popular">Terlaris</option>
-      <option value="hargaAsc">Harga: rendah → tinggi</option>
-      <option value="hargaDesc">Harga: tinggi → rendah</option>
-    </select>
-  </div>
-
-  <div class="grid" id="list"></div>
-</main>
-
-<footer id="hubungi">
-  <div class="foot">
-    <div>© <span id="year"></span> KT Nisang. All rights reserved.</div>
-    <div>WhatsApp: <a id="wa2" target="_blank" rel="noopener">Hubungi kami</a></div>
-  </div>
-</footer>
-
-<script>
-  // ========= CONFIG =========
-  const whatsappNumber = "60123456789";
-  const waMsg = encodeURIComponent("Hai, saya nak tanya stok/borong.");
-
-  // Gambar hero – boleh guna: Imgur direct / Imgur page (single) / Drive ID atau link
-  const heroImage = "GANTI_URL_IMGUR_hero_atau_ID_DRIVE";
-
-  // Produk – 'img' boleh: URL Imgur direct (.jpg/.png), Imgur page single (bukan album), atau Drive (ID/link)
-  const products = [
-    { name: "Bekas Serbaguna (M)", price: 9.90, img: "GANTI_URL_IMGUR_1", desc: "Bekas plastik saiz M. Kemas & tahan lasak.", tag: "Ready stock", popular: 3 },
-    { name: "Bekas Besar (L)",      price: 14.90, img: "GANTI_URL_IMGUR_2", desc: "Bekas besar sesuai simpan makanan kering.", tag: "Promo",       popular: 2 },
-    { name: "Bekas Mini (S)",       price: 6.50,  img: "GANTI_URL_IMGUR_3", desc: "Comel & padat, sesuai aksesori kecil.",   tag: "Baru",        popular: 1 }
-  ];
-  // ========= END CONFIG =========
-
-  // --- Helpers: Drive & Imgur normalizer ---
-  function driveToDirect(u) {
-    if (!u) return "";
-    // ID sahaja?
-    if (!/^https?:\/\//i.test(u) && /^[A-Za-z0-9_-]{20,}$/.test(u)) {
-      return `https://drive.google.com/uc?export=view&id=${u}`;
-    }
-    // Dah direct?
-    if (/drive\.google\.com\/uc\?/.test(u) && /[?&]id=/.test(u)) return u;
-
-    // /file/d/<ID>/view
-    let m = u.match(/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/);
-    if (m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
-
-    // /open?id=<ID>
-    m = u.match(/[?&]id=([A-Za-z0-9_-]+)/);
-    if (m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
-
-    return u;
-  }
-
-  function imgurToDirect(u) {
-    if (!u) return "";
-    // Jika sudah i.imgur.com dengan extension → biar
-    if (/^https?:\/\/i\.imgur\.com\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(u)) return u;
-
-    // Imgur single image page: https://imgur.com/XXXX atau https://imgur.com/XXXX.jpg
-    const m = u.match(/^https?:\/\/imgur\.com\/(gallery\/)?([A-Za-z0-9]+)(\.\w+)?$/i);
-    if (m) {
-      const id = m[2];
-      // default ke .jpg
-      return `https://i.imgur.com/${id}.jpg`;
-    }
-    // Album (imgur.com/a/ID) tak boleh auto-enum tanpa API → user kena ambil URL direct setiap gambar.
-    return u;
-  }
-
-  function normalizeImageURL(u) {
-    if (!u) return "";
-    // Cuba normalize ikut jenis
-    const isDrive = /drive\.google\.com/.test(u) || (!/^https?:\/\//i.test(u) && /^[A-Za-z0-9_-]{20,}$/.test(u));
-    const isImgur = /imgur\.com/.test(u);
-    if (isDrive) return driveToDirect(u);
-    if (isImgur) return imgurToDirect(u);
-    return u; // direct URL lain (e.g. i.imgur.com/xxx.jpg) terus guna
-  }
-
-  // ============ App ============
-  const listEl = document.getElementById("list");
-  const q = document.getElementById("q");
-  const sortSel = document.getElementById("sort");
-
-  function fmtMYR(n){ return "RM " + n.toFixed(2); }
-
-  function render(items){
-    listEl.innerHTML = "";
-    items.forEach(p=>{
-      const card = document.createElement("article");
-      card.className = "card";
-      card.innerHTML = `
-        <img loading="lazy" src="${normalizeImageURL(p.img)}" alt="${p.name}">
-        <div class="p">
-          <div class="row" style="margin-bottom:6px">
-            <h3 class="title">${p.name}</h3>
-            ${p.tag ? `<span class="tag">${p.tag}</span>` : ""}
-          </div>
-          <p class="desc">${p.desc||""}</p>
-          <div class="row">
-            <div class="price">${fmtMYR(p.price)}</div>
-            <a class="btn" target="_blank" rel="noopener"
-               href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hai, saya berminat.")}%0AProduk:%20${encodeURIComponent(p.name)}%20(${encodeURIComponent(fmtMYR(p.price))})">
-              WhatsApp
-            </a>
-          </div>
-        </div>
-      `;
-      listEl.appendChild(card);
-    });
-  }
-
-  function apply(){
-    let items = products.slice();
-    const term = q.value.trim().toLowerCase();
-    if(term){
-      items = items.filter(p =>
-        (p.name+p.desc+(p.tag||"")).toLowerCase().includes(term)
-      );
-    }
-    const s = sortSel.value;
-    if(s==="hargaAsc") items.sort((a,b)=>a.price-b.price);
-    else if(s==="hargaDesc") items.sort((a,b)=>b.price-a.price);
-    else items.sort((a,b)=>(b.popular||0)-(a.popular||0));
-    render(items);
-  }
-
-  function scrollToProduk(){ document.getElementById("produk").scrollIntoView({behavior:"smooth"}); }
-
-  // WA links & tahun
-  document.getElementById("ctaWA").href = `https://wa.me/${whatsappNumber}?text=${waMsg}`;
-  document.getElementById("wa2").href = `https://wa.me/${whatsappNumber}?text=${waMsg}`;
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // Set hero image
-  document.getElementById("heroImg").src = normalizeImageURL(heroImage);
-
-  // First render
-  apply();
-</script>
+    <!-- Gambar hero -->
+    <img src="https://i.imgur.com/abcd123.jpg" alt="Produk KT Nisang">
+  </section>
 </body>
 </html>
