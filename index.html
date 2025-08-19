@@ -61,7 +61,6 @@
         <a class="btn outline" id="ctaWA" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
-    <!-- src akan diisi melalui JS (auto-convert Drive) -->
     <img id="heroImg" loading="lazy" alt="Produk KT Nisang">
   </div>
 </section>
@@ -87,28 +86,22 @@
 </footer>
 
 <script>
-  // ========= CONFIG (ubah ikut kau) =========
-  const whatsappNumber = "60123456789"; // contoh: 60123456789
+  // ========= CONFIG =========
+  const whatsappNumber = "60123456789";
   const waMsg = encodeURIComponent("Hai, saya nak tanya stok/borong.");
 
-  // Gambar hero – boleh letak: ID sahaja / share link / direct link
-  const heroImage = "1WdX0fv8FIznMpX8peRiTrpKM9CeCgvCE";
+  // Gambar hero – boleh guna: Imgur direct / Imgur page (single) / Drive ID atau link
+  const heroImage = "GANTI_URL_IMGUR_hero_atau_ID_DRIVE";
 
-  // Senarai produk – 'img' boleh guna ID, share link, atau direct
+  // Produk – 'img' boleh: URL Imgur direct (.jpg/.png), Imgur page single (bukan album), atau Drive (ID/link)
   const products = [
-    {
-      name: "Bekas Serbaguna (M)",
-      price: 9.90,
-      img: "https://drive.google.com/file/d/1WdX0fv8FIznMpX8peRiTrpKM9CeCgvCE/view?usp=sharing",
-      desc: "Bekas plastik saiz M. Kemas & tahan lasak.",
-      tag: "Ready stock",
-      popular: 1
-    }
-    // ,{ name:"Bekas Besar (L)", price:14.90, img:"FILE_ID_LAIN", desc:"...", tag:"Promo", popular:2 }
+    { name: "Bekas Serbaguna (M)", price: 9.90, img: "GANTI_URL_IMGUR_1", desc: "Bekas plastik saiz M. Kemas & tahan lasak.", tag: "Ready stock", popular: 3 },
+    { name: "Bekas Besar (L)",      price: 14.90, img: "GANTI_URL_IMGUR_2", desc: "Bekas besar sesuai simpan makanan kering.", tag: "Promo",       popular: 2 },
+    { name: "Bekas Mini (S)",       price: 6.50,  img: "GANTI_URL_IMGUR_3", desc: "Comel & padat, sesuai aksesori kecil.",   tag: "Baru",        popular: 1 }
   ];
   // ========= END CONFIG =========
 
-  // --- Converter: Google Drive → direct image ---
+  // --- Helpers: Drive & Imgur normalizer ---
   function driveToDirect(u) {
     if (!u) return "";
     // ID sahaja?
@@ -126,10 +119,36 @@
     m = u.match(/[?&]id=([A-Za-z0-9_-]+)/);
     if (m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
 
-    // fallback
     return u;
   }
 
+  function imgurToDirect(u) {
+    if (!u) return "";
+    // Jika sudah i.imgur.com dengan extension → biar
+    if (/^https?:\/\/i\.imgur\.com\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(u)) return u;
+
+    // Imgur single image page: https://imgur.com/XXXX atau https://imgur.com/XXXX.jpg
+    const m = u.match(/^https?:\/\/imgur\.com\/(gallery\/)?([A-Za-z0-9]+)(\.\w+)?$/i);
+    if (m) {
+      const id = m[2];
+      // default ke .jpg
+      return `https://i.imgur.com/${id}.jpg`;
+    }
+    // Album (imgur.com/a/ID) tak boleh auto-enum tanpa API → user kena ambil URL direct setiap gambar.
+    return u;
+  }
+
+  function normalizeImageURL(u) {
+    if (!u) return "";
+    // Cuba normalize ikut jenis
+    const isDrive = /drive\.google\.com/.test(u) || (!/^https?:\/\//i.test(u) && /^[A-Za-z0-9_-]{20,}$/.test(u));
+    const isImgur = /imgur\.com/.test(u);
+    if (isDrive) return driveToDirect(u);
+    if (isImgur) return imgurToDirect(u);
+    return u; // direct URL lain (e.g. i.imgur.com/xxx.jpg) terus guna
+  }
+
+  // ============ App ============
   const listEl = document.getElementById("list");
   const q = document.getElementById("q");
   const sortSel = document.getElementById("sort");
@@ -142,7 +161,7 @@
       const card = document.createElement("article");
       card.className = "card";
       card.innerHTML = `
-        <img loading="lazy" src="${driveToDirect(p.img)}" alt="${p.name}">
+        <img loading="lazy" src="${normalizeImageURL(p.img)}" alt="${p.name}">
         <div class="p">
           <div class="row" style="margin-bottom:6px">
             <h3 class="title">${p.name}</h3>
@@ -152,7 +171,7 @@
           <div class="row">
             <div class="price">${fmtMYR(p.price)}</div>
             <a class="btn" target="_blank" rel="noopener"
-               href="https://wa.me/${whatsappNumber}?text=${waMsg}%20%0AProduk:%20${encodeURIComponent(p.name)}%20(${encodeURIComponent(fmtMYR(p.price))})">
+               href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hai, saya berminat.")}%0AProduk:%20${encodeURIComponent(p.name)}%20(${encodeURIComponent(fmtMYR(p.price))})">
               WhatsApp
             </a>
           </div>
@@ -179,13 +198,13 @@
 
   function scrollToProduk(){ document.getElementById("produk").scrollIntoView({behavior:"smooth"}); }
 
-  // Set WA links & tahun
+  // WA links & tahun
   document.getElementById("ctaWA").href = `https://wa.me/${whatsappNumber}?text=${waMsg}`;
   document.getElementById("wa2").href = `https://wa.me/${whatsappNumber}?text=${waMsg}`;
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Set gambar hero (auto-convert Drive)
-  document.getElementById("heroImg").src = driveToDirect(heroImage);
+  // Set hero image
+  document.getElementById("heroImg").src = normalizeImageURL(heroImage);
 
   // First render
   apply();
